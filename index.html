@@ -11,7 +11,6 @@ def calculate_probability():
         
         exponent = 4.9654 + UK + SF36_PCS + SF36_MCS + KPS
         P = math.exp(exponent) / (1 + math.exp(exponent))
-        
         result_var.set(f"Probability P = {P:.4f}")
     except ValueError:
         messagebox.showerror("Input error", "Please enter valid numerical values.")
@@ -47,3 +46,4 @@ result_label = tk.Label(root, textvariable=result_var, font=("Arial", 14))
 result_label.grid(row=5, column=0, columnspan=2, pady=5)
 
 root.mainloop()
+
