@@ -1,49 +1,107 @@
-import tkinter as tk
-from tkinter import messagebox
-import math
-
-def calculate_probability():
-    try:
-        UK = float(entry_UK.get())
-        SF36_PCS = float(entry_SF36_PCS.get())
-        SF36_MCS = float(entry_SF36_MCS.get())
-        KPS = float(entry_KPS.get())
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Notion Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
         
-        exponent = 4.9654 + UK + SF36_PCS + SF36_MCS + KPS
-        P = math.exp(exponent) / (1 + math.exp(exponent))
-        result_var.set(f"Probability P = {P:.4f}")
-    except ValueError:
-        messagebox.showerror("Input error", "Please enter valid numerical values.")
+        .calculator-container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+        
+        h3, p {
+            text-align: center;
+        }
+        
+        .input-group, .output-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        input[type="number"] {
+            width: 90%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        button:hover {
+            background-color: #0056b3;
+        }
+        
+        #result {
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
 
-# Create main window
-root = tk.Tk()
-root.title("Probability Calculator")
-
-# Labels and entries
-tk.Label(root, text="UK:").grid(row=0, column=0, padx=10, pady=5)
-entry_UK = tk.Entry(root)
-entry_UK.grid(row=0, column=1, padx=10, pady=5)
-
-tk.Label(root, text="SF36-PCS:").grid(row=1, column=0, padx=10, pady=5)
-entry_SF36_PCS = tk.Entry(root)
-entry_SF36_PCS.grid(row=1, column=1, padx=10, pady=5)
-
-tk.Label(root, text="SF36-MCS:").grid(row=2, column=0, padx=10, pady=5)
-entry_SF36_MCS = tk.Entry(root)
-entry_SF36_MCS.grid(row=2, column=1, padx=10, pady=5)
-
-tk.Label(root, text="KPS:").grid(row=3, column=0, padx=10, pady=5)
-entry_KPS = tk.Entry(root)
-entry_KPS.grid(row=3, column=1, padx=10, pady=5)
-
-# Button to calculate
-calc_button = tk.Button(root, text="Calculate Probability", command=calculate_probability)
-calc_button.grid(row=4, column=0, columnspan=2, pady=10)
-
-# Label to display result
-result_var = tk.StringVar()
-result_label = tk.Label(root, textvariable=result_var, font=("Arial", 14))
-result_label.grid(row=5, column=0, columnspan=2, pady=5)
-
-root.mainloop()
-
+    <div class="calculator-container">
+        <h3>P Calculator</h3>
+        <p>P = (exp(4.9654 + UK + SF36-PCS + SF36-MCS + KPS)) / (1 + exp(4.9654 + UK + SF36-PCS + SF36-MCS + KPS))</p>
+        <div class="input-group">
+            <label for="uk">UK:</label>
+            <input type="number" id="uk" value="0">
+        </div>
+        <div class="input-group">
+            <label for="sf36-pcs">SF36-PCS:</label>
+            <input type="number" id="sf36-pcs" value="0">
+        </div>
+        <div class="input-group">
+            <label for="sf36-mcs">SF36-MCS:</label>
+            <input type="number" id="sf36-mcs" value="0">
+        </div>
+        <div class="input-group">
+            <label for="kps">KPS:</label>
+            <input type="number" id="kps" value="0">
+        </div>
+        <button onclick="calculateP()">Calculate P</button>
+        <div class="output-group">
+            <p>Result (P): <span id="result"></span></p>
+        </div>
+    </div>
+    
+    <script>
+        function calculateP() {
+            const UK = parseFloat(document.getElementById('uk').value);
+            const SF36_PCS = parseFloat(document.getElementById('sf36-pcs').value);
+            const SF36_MCS = parseFloat(document.getElementById('sf36-mcs').value);
+            const KPS = parseFloat(document.getElementById('kps').value);
+        
+            const exponent_term = 4.9654 + UK + SF36_PCS + SF36_MCS + KPS;
+            const numerator = Math.exp(exponent_term);
+            const denominator = 1 + numerator;
+            const P = numerator / denominator;
+        
+            document.getElementById('result').textContent = P.toFixed(4);
+        }
+    </script>
+</body>
+</html>
